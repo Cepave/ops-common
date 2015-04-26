@@ -9,9 +9,10 @@ type DesiredAgent struct {
 }
 
 type RealAgent struct {
-	Name    string `json:"name"`
-	Version string `json:"version"`
-	Status  string `json:"status"`
+	Name      string `json:"name"`
+	Version   string `json:"version"`
+	Status    string `json:"status"`
+	Timestamp int64  `json:"timestamp"`
 }
 
 type HeartbeatRequest struct {
