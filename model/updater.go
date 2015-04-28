@@ -18,6 +18,8 @@ type DesiredAgent struct {
 	TarballFilepath string `json:"-"`
 	Md5Filepath     string `json:"-"`
 	ControlFilepath string `json:"-"`
+	TarballUrl      string `json:"-"`
+	Md5Url          string `json:"-"`
 }
 
 func (this *DesiredAgent) String() string {
@@ -39,6 +41,13 @@ func (this *DesiredAgent) FillAttrs(workdir string) {
 	this.TarballFilepath = path.Join(this.AgentVersionDir, this.TarballFilename)
 	this.Md5Filepath = path.Join(this.AgentVersionDir, this.Md5Filename)
 	this.ControlFilepath = path.Join(this.AgentVersionDir, "control")
+
+	if this.Md5 == "" {
+		this.Md5 = this.Tarball
+	}
+
+	this.TarballUrl = path.Join(this.Tarball, this.TarballFilename)
+	this.Md5Url = path.Join(this.Md5, this.Md5Filename)
 }
 
 type RealAgent struct {
