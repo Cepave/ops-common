@@ -10,7 +10,7 @@ func Md5sumCheck(workdir, md5file string) bool {
 	cmd.Dir = workdir
 	err := cmd.Run()
 	if err != nil {
-		log.Printf("md5sum -c %s in %s fail", md5file, workdir)
+		log.Printf("cd %s; md5sum -c %s fail", workdir, md5file)
 		return false
 	}
 	return true
