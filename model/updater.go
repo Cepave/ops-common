@@ -2,14 +2,22 @@ package model
 
 import (
 	"fmt"
+	"path"
 )
 
 type DesiredAgent struct {
-	Name    string `json:"name"`
-	Version string `json:"version"`
-	Tarball string `json:"tarball"`
-	Md5     string `json:"md5"`
-	Cmd     string `json:"cmd"`
+	Name            string `json:"name"`
+	Version         string `json:"version"`
+	Tarball         string `json:"tarball"`
+	Md5             string `json:"md5"`
+	Cmd             string `json:"cmd"`
+	AgentDir        string `json:"-"`
+	AgentVersionDir string `json:"-"`
+	TarballFilename string `json:"-"`
+	Md5Filename     string `json:"-"`
+	TarballFilepath string `json:"-"`
+	Md5Filepath     string `json:"-"`
+	ControlFilepath string `json:"-"`
 }
 
 func (this *DesiredAgent) String() string {
@@ -21,6 +29,16 @@ func (this *DesiredAgent) String() string {
 		this.Md5,
 		this.Cmd,
 	)
+}
+
+func (this *DesiredAgent) FillAttrs(workdir string) {
+	this.AgentDir = path.Join(workdir, this.Name)
+	this.AgentVersionDir = path.Join(this.AgentDir, this.Version)
+	this.TarballFilename = fmt.Sprintf("%s-%s.tar.gz", this.Name, this.Version)
+	this.Md5Filename = fmt.Sprintf("%s.md5", this.TarballFilename)
+	this.TarballFilepath = path.Join(this.AgentVersionDir, this.TarballFilename)
+	this.Md5Filepath = path.Join(this.AgentVersionDir, this.Md5Filename)
+	this.ControlFilepath = path.Join(this.AgentVersionDir, "control")
 }
 
 type RealAgent struct {
