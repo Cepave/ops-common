@@ -46,8 +46,8 @@ func (this *DesiredAgent) FillAttrs(workdir string) {
 		this.Md5 = this.Tarball
 	}
 
-	this.TarballUrl = path.Join(this.Tarball, this.TarballFilename)
-	this.Md5Url = path.Join(this.Md5, this.Md5Filename)
+	this.TarballUrl = fmt.Sprintf("%s/%s", this.Tarball, this.TarballFilename)
+	this.Md5Url = fmt.Sprintf("%s/%s", this.Md5, this.Md5Filename)
 }
 
 type RealAgent struct {
